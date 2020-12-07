@@ -9,8 +9,7 @@
 [![Chat][chat-badge]][chat]
 
 Extension for [`mdast-util-from-markdown`][from-markdown] and/or
-[`mdast-util-to-markdown`][to-markdown] to support ESM import/exports for MDX.js
-in **[mdast][]**.
+[`mdast-util-to-markdown`][to-markdown] to support MDX.js ESM import/exports.
 When parsing (`from-markdown`), must be combined with
 [`micromark-extension-mdxjs-esm`][extension].
 
@@ -105,7 +104,7 @@ d
 > Note: the separate extensions are also available at
 > `mdast-util-mdxjs-esm/from-markdown` and `mdast-util-mdxjs-esm/to-markdown`.
 
-Support ESM import/exports in MDX.js.
+Support MDX.js ESM import/exports.
 The exports are extensions, respectively for
 [`mdast-util-from-markdown`][from-markdown] and
 [`mdast-util-to-markdown`][to-markdown].
@@ -129,7 +128,7 @@ interface MDXJSEsm <: Literal {
 
 **MDXJSEsm** (**[Literal][dfn-literal]**) represents ESM import/exports embedded
 in MDX.
-It can be used where **[esm][dfn-esm-content]** content is expected.
+It can be used where **[flow][dfn-flow-content]** content is expected.
 Its content is represented by its `value` field.
 
 For example, the following Markdown:
@@ -147,22 +146,16 @@ Yields:
 }
 ```
 
-#### `ESMContent`
-
-```idl
-type ESMContent = MDXJSEsm
-```
-
-**ESM** content represent imported and exported information about the document.
-
-If ESM is present, it can only exist as top-level content: if it has a
-*[parent][dfn-parent]*, that parent must be **[Root][dfn-root]**.
+### Content model
 
 #### `FlowContent` (MDX.js ESM)
 
 ```idl
-type FlowContentMdxjsEsm = ESMContent | FlowContent
+type FlowContentMdxjsEsm = MDXJSEsm | FlowContent
 ```
+
+Note that when ESM is present, it can only exist as top-level content: if it has
+a *[parent][dfn-parent]*, that parent must be **[Root][dfn-root]**.
 
 ## Related
 
@@ -175,11 +168,11 @@ type FlowContentMdxjsEsm = ESMContent | FlowContent
 *   [`syntax-tree/mdast-util-to-markdown`][to-markdown]
     — mdast serializer to create markdown from mdast
 *   `syntax-tree/mdast-util-mdxjs`
-    — mdast utility to support all of MDX.js
+    — mdast utility to support MDX.js
 *   [`micromark/micromark`][micromark]
     — the smallest commonmark-compliant markdown parser that exists
 *   [`micromark/micromark-extension-mdxjs-esm`][extension]
-    — micromark extension to parse ESM
+    — micromark extension to parse MDX.js ESM
 
 ## Contribute
 
@@ -255,4 +248,4 @@ abide by its terms.
 
 [dfn-root]: https://github.com/syntax-tree/mdast#root
 
-[dfn-esm-content]: #esmcontent
+[dfn-flow-content]: #flowcontent-mdxjs-esm
