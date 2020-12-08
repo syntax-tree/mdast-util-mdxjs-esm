@@ -16,8 +16,9 @@ When parsing (`from-markdown`), must be combined with
 This utility handles parsing and serializing.
 See [`micromark-extension-mdxjs-esm`][extension] for how the syntax works.
 
-You probably should use `micromark-extension-mdxjs` with `mdast-util-mdxjs`
-(which includes this package) to support all of MDX.js.
+You probably should use [`micromark-extension-mdxjs`][mdxjs] with
+[`mdast-util-mdx`][mdast-util-mdx] (which includes this package) to support all
+of MDX.js.
 Or use it all through `remark-mdxjs` (**[remark][]**).
 
 ## Install
@@ -167,8 +168,8 @@ a *[parent][dfn-parent]*, that parent must be **[Root][dfn-root]**.
     — mdast parser using `micromark` to create mdast from markdown
 *   [`syntax-tree/mdast-util-to-markdown`][to-markdown]
     — mdast serializer to create markdown from mdast
-*   `syntax-tree/mdast-util-mdxjs`
-    — mdast utility to support MDX.js
+*   [`syntax-tree/mdast-util-mdx`][mdast-util-mdx]
+    — mdast utility to support MDX
 *   [`micromark/micromark`][micromark]
     — the smallest commonmark-compliant markdown parser that exists
 *   [`micromark/micromark-extension-mdxjs-esm`][extension]
@@ -239,6 +240,10 @@ abide by its terms.
 [micromark]: https://github.com/micromark/micromark
 
 [extension]: https://github.com/micromark/micromark-extension-mdxjs-esm
+
+[mdxjs]: https://github.com/micromark/micromark-extension-mdxjs
+
+[mdast-util-mdx]: https://github.com/syntax-tree/mdast-util-mdx
 
 [estree]: https://github.com/estree/estree
 
