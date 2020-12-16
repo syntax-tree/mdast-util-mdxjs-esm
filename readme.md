@@ -76,10 +76,34 @@ Now, running `node example` yields (positional info removed for brevity):
       data: {
         estree: {
           type: 'Program',
-          start: 0,
-          end: 35,
-          loc: [SourceLocation],
-          body: [Array],
+          body: [
+            {
+              type: 'ImportDeclaration',
+              specifiers: [
+                {
+                  type: 'ImportDefaultSpecifier',
+                  local: {type: 'Identifier', name: 'a'}
+                }
+              ],
+              source: {type: 'Literal', value: 'b', raw: "'b'"}
+            },
+            {
+              type: 'ExportNamedDeclaration',
+              declaration: {
+                type: 'VariableDeclaration',
+                declarations: [
+                  {
+                    type: 'VariableDeclarator',
+                    id: {type: 'Identifier', name: 'c'},
+                    init: {type: 'Literal', value: '', raw: "''"}
+                  }
+                ],
+                kind: 'var'
+              },
+              specifiers: [],
+              source: null
+            }
+          ],
           sourceType: 'module'
         }
       }
@@ -162,8 +186,8 @@ a *[parent][dfn-parent]*, that parent must be **[Root][dfn-root]**.
 
 *   [`remarkjs/remark`][remark]
     — markdown processor powered by plugins
-*   `remarkjs/remark-mdxjs`
-    — remark plugin to support MDX.js
+*   [`remarkjs/remark-mdx`][remark-mdx]
+    — remark plugin to support MDX
 *   [`syntax-tree/mdast-util-from-markdown`][from-markdown]
     — mdast parser using `micromark` to create mdast from markdown
 *   [`syntax-tree/mdast-util-to-markdown`][to-markdown]
