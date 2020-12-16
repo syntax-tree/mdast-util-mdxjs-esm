@@ -19,7 +19,7 @@ See [`micromark-extension-mdxjs-esm`][extension] for how the syntax works.
 You probably should use [`micromark-extension-mdxjs`][mdxjs] with
 [`mdast-util-mdx`][mdast-util-mdx] (which includes this package) to support all
 of MDX.js.
-Or use it all through `remark-mdxjs` (**[remark][]**).
+Or use it all through [`remark-mdx`][remark-mdx] (**[remark][]**).
 
 ## Install
 
@@ -254,3 +254,5 @@ abide by its terms.
 [dfn-root]: https://github.com/syntax-tree/mdast#root
 
 [dfn-flow-content]: #flowcontent-mdxjs-esm
+
+[remark-mdx]: https://github.com/mdx-js/mdx/tree/next/packages/remark-mdx
