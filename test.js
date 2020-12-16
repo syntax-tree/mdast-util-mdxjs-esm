@@ -100,8 +100,10 @@ test('markdown -> mdast', function (t) {
                           start: {line: 1, column: 7},
                           end: {line: 1, column: 8}
                         },
-                        name: 'a'
-                      }
+                        name: 'a',
+                        range: [7, 8]
+                      },
+                      range: [7, 8]
                     }
                   ],
                   source: {
@@ -113,8 +115,10 @@ test('markdown -> mdast', function (t) {
                       end: {line: 1, column: 17}
                     },
                     value: 'b',
-                    raw: '"b"'
-                  }
+                    raw: '"b"',
+                    range: [14, 17]
+                  },
+                  range: [0, 17]
                 },
                 {
                   type: 'ExportNamedDeclaration',
@@ -149,7 +153,8 @@ test('markdown -> mdast', function (t) {
                             start: {line: 2, column: 11},
                             end: {line: 2, column: 12}
                           },
-                          name: 'c'
+                          name: 'c',
+                          range: [29, 30]
                         },
                         init: {
                           type: 'Literal',
@@ -160,17 +165,22 @@ test('markdown -> mdast', function (t) {
                             end: {line: 2, column: 17}
                           },
                           value: '',
-                          raw: '""'
-                        }
+                          raw: '""',
+                          range: [33, 35]
+                        },
+                        range: [29, 35]
                       }
                     ],
-                    kind: 'var'
+                    kind: 'var',
+                    range: [25, 35]
                   },
                   specifiers: [],
-                  source: null
+                  source: null,
+                  range: [18, 35]
                 }
               ],
-              sourceType: 'module'
+              sourceType: 'module',
+              range: [0, 35]
             }
           }
         },
