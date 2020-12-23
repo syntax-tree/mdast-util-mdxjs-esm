@@ -180,6 +180,7 @@ test('markdown -> mdast', function (t) {
                 }
               ],
               sourceType: 'module',
+              comments: [],
               range: [0, 35]
             }
           }
