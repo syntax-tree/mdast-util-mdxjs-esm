@@ -16,10 +16,10 @@ When parsing (`from-markdown`), must be combined with
 This utility handles parsing and serializing.
 See [`micromark-extension-mdxjs-esm`][extension] for how the syntax works.
 
-You probably should use [`micromark-extension-mdxjs`][mdxjs] with
-[`mdast-util-mdx`][mdast-util-mdx] (which includes this package) to support all
-of MDX.js.
-Or use it all through [`remark-mdx`][remark-mdx] (**[remark][]**).
+## When to use this
+
+Use [`mdast-util-mdx`][mdast-util-mdx] if you want all of MDX / MDX.js.
+Use this otherwise.
 
 ## Install
 
@@ -43,26 +43,26 @@ export var c = ''
 d
 ```
 
-And our script, `example.js`, looks as follows:
+And our module, `example.js`, looks as follows:
 
 ```js
-var fs = require('fs')
-var acorn = require('acorn')
-var syntax = require('micromark-extension-mdxjs-esm')
-var fromMarkdown = require('mdast-util-from-markdown')
-var toMarkdown = require('mdast-util-to-markdown')
-var mdxjsEsm = require('mdast-util-mdxjs-esm')
+import fs from 'fs'
+import * as acorn from 'acorn'
+import {fromMarkdown} from 'mdast-util-from-markdown'
+import {toMarkdown} from 'mdast-util-to-markdown'
+import mdxjsEsm from 'micromark-extension-mdxjs-esm'
+import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'mdast-util-mdxjs-esm'
 
-var doc = fs.readFileSync('example.mdx')
+const doc = fs.readFileSync('example.mdx')
 
-var tree = fromMarkdown(doc, {
-  extensions: [syntax({acorn: acorn, addResult: true})],
-  mdastExtensions: [mdxjsEsm.fromMarkdown]
+const tree = fromMarkdown(doc, {
+  extensions: [mdxjsEsm({acorn, addResult: true})],
+  mdastExtensions: [mdxjsEsmFromMarkdown]
 })
 
 console.log(tree)
 
-var out = toMarkdown(tree, {extensions: [mdxjsEsm.toMarkdown]})
+const out = toMarkdown(tree, {extensions: [mdxjsEsmToMarkdown]})
 
 console.log(out)
 ```
@@ -268,8 +268,6 @@ abide by its terms.
 [micromark]: https://github.com/micromark/micromark
 
 [extension]: https://github.com/micromark/micromark-extension-mdxjs-esm
-
-[mdxjs]: https://github.com/micromark/micromark-extension-mdxjs
 
 [mdast-util-mdx]: https://github.com/syntax-tree/mdast-util-mdx
 
