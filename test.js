@@ -6,7 +6,7 @@ import {removePosition} from 'unist-util-remove-position'
 import mdxjsEsm from 'micromark-extension-mdxjs-esm'
 import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from './index.js'
 
-test('markdown -> mdast', function (t) {
+test('markdown -> mdast', (t) => {
   t.deepEqual(
     fromMarkdown('import a from "b"\nexport var c = ""\n\nd', {
       extensions: [mdxjsEsm({acorn})],
@@ -194,7 +194,7 @@ test('markdown -> mdast', function (t) {
   t.end()
 })
 
-test('mdast -> markdown', function (t) {
+test('mdast -> markdown', (t) => {
   t.deepEqual(
     toMarkdown(
       {

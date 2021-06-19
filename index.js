@@ -11,8 +11,8 @@ function enterMdxjsEsm(token) {
 }
 
 function exitMdxjsEsm(token) {
-  var value = this.resume()
-  var node = this.exit(token)
+  const value = this.resume()
+  const node = this.exit(token)
 
   node.value = value
 
