@@ -1,16 +1,16 @@
-var test = require('tape')
-var acorn = require('acorn')
-var fromMarkdown = require('mdast-util-from-markdown')
-var toMarkdown = require('mdast-util-to-markdown')
-var removePosition = require('unist-util-remove-position')
-var syntax = require('micromark-extension-mdxjs-esm')
-var mdxjsEsm = require('.')
+import test from 'tape'
+import * as acorn from 'acorn'
+import fromMarkdown from 'mdast-util-from-markdown'
+import toMarkdown from 'mdast-util-to-markdown'
+import {removePosition} from 'unist-util-remove-position'
+import mdxjsEsm from 'micromark-extension-mdxjs-esm'
+import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from './index.js'
 
 test('markdown -> mdast', function (t) {
   t.deepEqual(
     fromMarkdown('import a from "b"\nexport var c = ""\n\nd', {
-      extensions: [syntax({acorn: acorn})],
-      mdastExtensions: [mdxjsEsm.fromMarkdown]
+      extensions: [mdxjsEsm({acorn})],
+      mdastExtensions: [mdxjsEsmFromMarkdown]
     }),
     {
       type: 'root',
@@ -55,8 +55,8 @@ test('markdown -> mdast', function (t) {
       JSON.stringify(
         removePosition(
           fromMarkdown('import a from "b"\nexport var c = ""\n\nd', {
-            extensions: [syntax({acorn: acorn, addResult: true})],
-            mdastExtensions: [mdxjsEsm.fromMarkdown]
+            extensions: [mdxjsEsm({acorn, addResult: true})],
+            mdastExtensions: [mdxjsEsmFromMarkdown]
           }),
           true
         )
@@ -188,7 +188,7 @@ test('markdown -> mdast', function (t) {
         {type: 'paragraph', children: [{type: 'text', value: 'd'}]}
       ]
     },
-    'should add a `data.estree` if `addResult` was used in the syntax plugin'
+    'should add a `data.estree` if `addResult` was used in the syntax extension'
   )
 
   t.end()
@@ -204,7 +204,7 @@ test('mdast -> markdown', function (t) {
           {type: 'paragraph', children: [{type: 'text', value: 'd'}]}
         ]
       },
-      {extensions: [mdxjsEsm.toMarkdown]}
+      {extensions: [mdxjsEsmToMarkdown]}
     ),
     'import a from "b"\nexport var c = ""\n\nd\n',
     'should serialize ESM'
@@ -219,7 +219,7 @@ test('mdast -> markdown', function (t) {
           {type: 'paragraph', children: [{type: 'text', value: 'd'}]}
         ]
       },
-      {extensions: [mdxjsEsm.toMarkdown]}
+      {extensions: [mdxjsEsmToMarkdown]}
     ),
     '\n\nd\n',
     'should not crash on ESM missing `value`'
