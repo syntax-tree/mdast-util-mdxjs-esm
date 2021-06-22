@@ -1,9 +1,9 @@
 import test from 'tape'
 import * as acorn from 'acorn'
-import fromMarkdown from 'mdast-util-from-markdown'
-import toMarkdown from 'mdast-util-to-markdown'
+import {fromMarkdown} from 'mdast-util-from-markdown'
+import {toMarkdown} from 'mdast-util-to-markdown'
 import {removePosition} from 'unist-util-remove-position'
-import mdxjsEsm from 'micromark-extension-mdxjs-esm'
+import {mdxjsEsm} from 'micromark-extension-mdxjs-esm'
 import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from './index.js'
 
 test('markdown -> mdast', (t) => {

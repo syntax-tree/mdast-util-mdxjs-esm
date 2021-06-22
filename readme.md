@@ -50,7 +50,7 @@ import fs from 'fs'
 import * as acorn from 'acorn'
 import {fromMarkdown} from 'mdast-util-from-markdown'
 import {toMarkdown} from 'mdast-util-to-markdown'
-import mdxjsEsm from 'micromark-extension-mdxjs-esm'
+import {mdxjsEsm} from 'micromark-extension-mdxjs-esm'
 import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'mdast-util-mdxjs-esm'
 
 const doc = fs.readFileSync('example.mdx')
