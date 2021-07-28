@@ -215,6 +215,7 @@ test('mdast -> markdown', (t) => {
       {
         type: 'root',
         children: [
+          // @ts-expect-error: `value` missing.
           {type: 'mdxjsEsm'},
           {type: 'paragraph', children: [{type: 'text', value: 'd'}]}
         ]
