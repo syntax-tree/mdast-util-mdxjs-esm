@@ -4,7 +4,9 @@
  * @typedef {import('mdast-util-to-markdown').Options} ToMarkdownExtension
  * @typedef {import('mdast-util-to-markdown').Handle} ToMarkdownHandle
  * @typedef {import('estree-jsx').Program} Program
- * @typedef {import('./complex-types').MDXJSEsm} MDXJSEsm
+ * @typedef {import('./complex-types').MdxjsEsm} MdxjsEsm
+ *
+ * @typedef {MdxjsEsm} MDXJSEsm - Deprecated name, prefer `MdxjsEsm`
  */
 
 /** @type {FromMarkdownExtension} */
@@ -25,7 +27,7 @@ function enterMdxjsEsm(token) {
 /** @type {FromMarkdownHandle} */
 function exitMdxjsEsm(token) {
   const value = this.resume()
-  const node = /** @type {MDXJSEsm} */ (this.exit(token))
+  const node = /** @type {MdxjsEsm} */ (this.exit(token))
   /** @type {Program|undefined} */
   // @ts-expect-error: custom.
   const estree = token.estree
@@ -45,7 +47,7 @@ function exitMdxjsEsmData(token) {
 
 /**
  * @type {ToMarkdownHandle}
- * @param {MDXJSEsm} node
+ * @param {MdxjsEsm} node
  */
 function handleMdxjsEsm(node) {
   return node.value || ''
