@@ -11,3 +11,12 @@ declare module 'mdast' {
     mdxjsEsm: MdxjsEsm
   }
 }
+
+declare module 'hast' {
+  interface RootContentMap {
+    mdxjsEsm: MdxjsEsm
+  }
+  interface ElementContentMap {
+    mdxjsEsm: MdxjsEsm
+  }
+}

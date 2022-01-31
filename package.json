@@ -39,6 +39,7 @@
   ],
   "dependencies": {
     "@types/estree-jsx": "^0.0.1",
+    "@types/hast": "^2.0.0",
     "@types/mdast": "^3.0.0",
     "mdast-util-from-markdown": "^1.0.0",
     "mdast-util-to-markdown": "^1.0.0"
