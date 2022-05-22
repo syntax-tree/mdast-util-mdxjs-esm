@@ -8,52 +8,88 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Extension for [`mdast-util-from-markdown`][from-markdown] and/or
-[`mdast-util-to-markdown`][to-markdown] to support MDX.js ESM import/exports.
-When parsing (`from-markdown`), must be combined with
-[`micromark-extension-mdxjs-esm`][extension].
+[mdast][] extensions to parse and serialize [MDX][] ESM import/exports.
 
-This utility handles parsing and serializing.
-See [`micromark-extension-mdxjs-esm`][extension] for how the syntax works.
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When to use this](#when-to-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`mdxjsEsmFromMarkdown`](#mdxjsesmfrommarkdown)
+    *   [`mdxjsEsmToMarkdown`](#mdxjsesmtomarkdown)
+*   [Syntax tree](#syntax-tree)
+    *   [Nodes](#nodes)
+    *   [Content model](#content-model)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Related](#related)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package contains extensions that add support for the ESM syntax enabled
+by MDX to [`mdast-util-from-markdown`][mdast-util-from-markdown] and
+[`mdast-util-to-markdown`][mdast-util-to-markdown].
 
 ## When to use this
 
-Use [`mdast-util-mdx`][mdast-util-mdx] if you want all of MDX / MDX.js.
-Use this otherwise.
+These tools are all rather low-level.
+In most cases, you’d want to use [`remark-mdx`][remark-mdx] with remark instead.
+
+When you are working with syntax trees and want all of MDX, use
+[`mdast-util-mdx`][mdast-util-mdx] instead.
+
+When working with `mdast-util-from-markdown`, you must combine this package with
+[`micromark-extension-mdxjs-esm`][extension].
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install mdast-util-mdxjs-esm
 ```
 
+In Deno with [`esm.sh`][esmsh]:
+
+```js
+import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'https://esm.sh/mdast-util-mdxjs-esm@1'
+```
+
+In browsers with [`esm.sh`][esmsh]:
+
+```html
+<script type="module">
+  import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'https://esm.sh/mdast-util-mdxjs-esm@1?bundle'
+</script>
+```
+
 ## Use
 
-Say we have an MDX.js file, `example.mdx`:
+Say our document `example.mdx` contains:
 
 ```mdx
 import a from 'b'
-export var c = ''
+export const c = ''
 
 d
 ```
 
-And our module, `example.js`, looks as follows:
+…and our module `example.js` looks as follows:
 
 ```js
-import fs from 'fs'
+import fs from 'node:fs/promises'
 import * as acorn from 'acorn'
 import {fromMarkdown} from 'mdast-util-from-markdown'
 import {toMarkdown} from 'mdast-util-to-markdown'
 import {mdxjsEsm} from 'micromark-extension-mdxjs-esm'
 import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'mdast-util-mdxjs-esm'
 
-const doc = fs.readFileSync('example.mdx')
+const doc = await fs.readFile('example.mdx')
 
 const tree = fromMarkdown(doc, {
   extensions: [mdxjsEsm({acorn, addResult: true})],
@@ -67,7 +103,7 @@ const out = toMarkdown(tree, {extensions: [mdxjsEsmToMarkdown]})
 console.log(out)
 ```
 
-Now, running `node example` yields (positional info removed for brevity):
+…now running `node example.js` yields (positional info removed for brevity):
 
 ```js
 {
@@ -75,7 +111,7 @@ Now, running `node example` yields (positional info removed for brevity):
   children: [
     {
       type: 'mdxjsEsm',
-      value: "import a from 'b'\nexport var c = ''",
+      value: "import a from 'b'\nexport const c = ''",
       data: {
         estree: {
           type: 'Program',
@@ -101,7 +137,7 @@ Now, running `node example` yields (positional info removed for brevity):
                     init: {type: 'Literal', value: '', raw: "''"}
                   }
                 ],
-                kind: 'var'
+                kind: 'const'
               },
               specifiers: [],
               source: null
@@ -118,28 +154,27 @@ Now, running `node example` yields (positional info removed for brevity):
 
 ```markdown
 import a from 'b'
-export var c = ''
+export const c = ''
 
 d
 ```
 
 ## API
 
-This package exports the following identifier: `mdxjsEsmFromMarkdown`,
+This package exports the identifiers `mdxjsEsmFromMarkdown` and
 `mdxjsEsmToMarkdown`.
 There is no default export.
 
 ### `mdxjsEsmFromMarkdown`
 
-### `mdxjsEsmToMarkdown`
-
-Support MDX.js ESM import/exports.
-The exports are extensions, respectively for
-[`mdast-util-from-markdown`][from-markdown] and
-[`mdast-util-to-markdown`][to-markdown].
+Extension for [`mdast-util-from-markdown`][mdast-util-from-markdown].
 
 When using the [syntax extension with `addResult`][extension], nodes will have
-a `data.estree` field set to an [ESTree][]
+a `data.estree` field set to an [ESTree][].
+
+### `mdxjsEsmToMarkdown`
+
+Extension for [`mdast-util-to-markdown`][mdast-util-to-markdown].
 
 ## Syntax tree
 
@@ -186,27 +221,53 @@ type FlowContentMdxjsEsm = MDXJSEsm | FlowContent
 Note that when ESM is present, it can only exist as top-level content: if it has
 a *[parent][dfn-parent]*, that parent must be **[Root][dfn-root]**.
 
+## Types
+
+This package is fully typed with [TypeScript][].
+It exports the additional type `MdxjsEsm`.
+
+It also registers the node types with `@types/mdast`.
+If you’re working with the syntax tree, make sure to import this utility
+somewhere in your types, as that registers the new node types in the tree.
+
+```js
+/**
+ * @typedef {import('mdast-util-mdxjs-esm')}
+ */
+
+import {visit} from 'unist-util-visit'
+
+/** @type {import('mdast').Root} */
+const tree = getMdastNodeSomeHow()
+
+visit(tree, (node) => {
+  // `node` can now be an ESM node.
+})
+```
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
+
+This plugin works with `mdast-util-from-markdown` version 1+ and
+`mdast-util-to-markdown` version 1+.
+
 ## Related
 
-*   [`remarkjs/remark`][remark]
-    — markdown processor powered by plugins
 *   [`remarkjs/remark-mdx`][remark-mdx]
     — remark plugin to support MDX
-*   [`syntax-tree/mdast-util-from-markdown`][from-markdown]
-    — mdast parser using `micromark` to create mdast from markdown
-*   [`syntax-tree/mdast-util-to-markdown`][to-markdown]
-    — mdast serializer to create markdown from mdast
 *   [`syntax-tree/mdast-util-mdx`][mdast-util-mdx]
     — mdast utility to support MDX
-*   [`micromark/micromark`][micromark]
-    — the smallest commonmark-compliant markdown parser that exists
 *   [`micromark/micromark-extension-mdxjs-esm`][extension]
     — micromark extension to parse MDX.js ESM
 
 ## Contribute
 
-See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
-started.
+See [`contributing.md`][contributing] in [`syntax-tree/.github`][health] for
+ways to get started.
 See [`support.md`][support] for ways to get help.
 
 This project has a [code of conduct][coc].
@@ -247,29 +308,33 @@ abide by its terms.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[esmsh]: https://esm.sh
+
+[typescript]: https://www.typescriptlang.org
+
 [license]: license
 
 [author]: https://wooorm.com
 
-[contributing]: https://github.com/syntax-tree/.github/blob/HEAD/contributing.md
+[health]: https://github.com/syntax-tree/.github
 
-[support]: https://github.com/syntax-tree/.github/blob/HEAD/support.md
+[contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
 
-[coc]: https://github.com/syntax-tree/.github/blob/HEAD/code-of-conduct.md
+[support]: https://github.com/syntax-tree/.github/blob/main/support.md
+
+[coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
 
 [mdast]: https://github.com/syntax-tree/mdast
 
-[remark]: https://github.com/remarkjs/remark
+[mdast-util-from-markdown]: https://github.com/syntax-tree/mdast-util-from-markdown
 
-[from-markdown]: https://github.com/syntax-tree/mdast-util-from-markdown
-
-[to-markdown]: https://github.com/syntax-tree/mdast-util-to-markdown
-
-[micromark]: https://github.com/micromark/micromark
-
-[extension]: https://github.com/micromark/micromark-extension-mdxjs-esm
+[mdast-util-to-markdown]: https://github.com/syntax-tree/mdast-util-to-markdown
 
 [mdast-util-mdx]: https://github.com/syntax-tree/mdast-util-mdx
+
+[extension]: https://github.com/micromark/micromark-extension-mdxjs-esm
 
 [estree]: https://github.com/estree/estree
 
@@ -281,4 +346,6 @@ abide by its terms.
 
 [dfn-flow-content]: #flowcontent-mdxjs-esm
 
-[remark-mdx]: https://github.com/mdx-js/mdx/tree/next/packages/remark-mdx
+[remark-mdx]: https://mdxjs.com/packages/remark-mdx/
+
+[mdx]: https://mdxjs.com
