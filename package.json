@@ -1,6 +1,6 @@
 {
   "name": "mdast-util-mdxjs-esm",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "mdast extension to parse and serialize MDX.js ESM (import/exports)",
   "license": "MIT",
   "keywords": [
