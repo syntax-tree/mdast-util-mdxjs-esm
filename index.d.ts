@@ -25,6 +25,12 @@ export interface MdxjsEsm extends Literal {
   }
 }
 
+/**
+ * Deprecated: use the `MdxjsEsm` type instead.
+ */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type MDXJSEsm = MdxjsEsm
+
 // Add nodes to content.
 declare module 'mdast' {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
