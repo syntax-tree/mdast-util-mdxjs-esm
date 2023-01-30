@@ -1,22 +1,22 @@
-import {Literal} from 'mdast'
-import {Program} from 'estree-jsx'
+import {type Literal} from 'mdast'
+import {type Program} from 'estree-jsx'
 
-export interface MdxjsEsm extends Literal {
+export type MdxjsEsm = {
   type: 'mdxjsEsm'
   data?: {estree?: Program} & Literal['data']
-}
+} & Literal
 
 declare module 'mdast' {
-  interface BlockContentMap {
+  type BlockContentMap = {
     mdxjsEsm: MdxjsEsm
   }
 }
 
 declare module 'hast' {
-  interface RootContentMap {
+  type RootContentMap = {
     mdxjsEsm: MdxjsEsm
   }
-  interface ElementContentMap {
+  type ElementContentMap = {
     mdxjsEsm: MdxjsEsm
   }
 }
