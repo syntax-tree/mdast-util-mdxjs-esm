@@ -1,4 +1,5 @@
 /**
+ * @typedef {import('mdast-util-from-markdown').CompileContext} CompileContext
  * @typedef {import('mdast-util-from-markdown').Extension} FromMarkdownExtension
  * @typedef {import('mdast-util-from-markdown').Handle} FromMarkdownHandle
  * @typedef {import('mdast-util-to-markdown').Options} ToMarkdownExtension
@@ -6,7 +7,8 @@
  * @typedef {import('estree-jsx').Program} Program
  * @typedef {import('./complex-types.js').MdxjsEsm} MdxjsEsm
  *
- * @typedef {MdxjsEsm} MDXJSEsm - Deprecated name, prefer `MdxjsEsm`
+ * @typedef {MdxjsEsm} MDXJSEsm
+ *   Deprecated name, prefer `MdxjsEsm`.
  */
 
 /** @type {FromMarkdownExtension} */
@@ -18,13 +20,19 @@ export const mdxjsEsmFromMarkdown = {
 /** @type {ToMarkdownExtension} */
 export const mdxjsEsmToMarkdown = {handlers: {mdxjsEsm: handleMdxjsEsm}}
 
-/** @type {FromMarkdownHandle} */
+/**
+ * @this {CompileContext}
+ * @type {FromMarkdownHandle}
+ */
 function enterMdxjsEsm(token) {
   this.enter({type: 'mdxjsEsm', value: ''}, token)
   this.buffer() // Capture EOLs
 }
 
-/** @type {FromMarkdownHandle} */
+/**
+ * @this {CompileContext}
+ * @type {FromMarkdownHandle}
+ */
 function exitMdxjsEsm(token) {
   const value = this.resume()
   const node = /** @type {MdxjsEsm} */ (this.exit(token))
@@ -39,7 +47,10 @@ function exitMdxjsEsm(token) {
   }
 }
 
-/** @type {FromMarkdownHandle} */
+/**
+ * @this {CompileContext}
+ * @type {FromMarkdownHandle}
+ */
 function exitMdxjsEsmData(token) {
   this.config.enter.data.call(this, token)
   this.config.exit.data.call(this, token)
