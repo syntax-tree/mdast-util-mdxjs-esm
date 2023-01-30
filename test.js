@@ -6,6 +6,15 @@ import {toMarkdown} from 'mdast-util-to-markdown'
 import {removePosition} from 'unist-util-remove-position'
 import {mdxjsEsm} from 'micromark-extension-mdxjs-esm'
 import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from './index.js'
+import * as mod from './index.js'
+
+test('core', () => {
+  assert.deepEqual(
+    Object.keys(mod).sort(),
+    ['mdxjsEsmFromMarkdown', 'mdxjsEsmToMarkdown'],
+    'should expose the public api'
+  )
+})
 
 test('mdxjsEsmFromMarkdown', () => {
   assert.deepEqual(
