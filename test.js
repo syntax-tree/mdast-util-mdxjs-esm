@@ -1,4 +1,5 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import * as acorn from 'acorn'
 import {fromMarkdown} from 'mdast-util-from-markdown'
 import {toMarkdown} from 'mdast-util-to-markdown'
@@ -6,8 +7,8 @@ import {removePosition} from 'unist-util-remove-position'
 import {mdxjsEsm} from 'micromark-extension-mdxjs-esm'
 import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from './index.js'
 
-test('markdown -> mdast', (t) => {
-  t.deepEqual(
+test('mdxjsEsmFromMarkdown', () => {
+  assert.deepEqual(
     fromMarkdown('import a from "b"\nexport var c = ""\n\nd', {
       extensions: [mdxjsEsm({acorn})],
       mdastExtensions: [mdxjsEsmFromMarkdown]
@@ -49,7 +50,7 @@ test('markdown -> mdast', (t) => {
     'should support ESM'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     // Cheap clone to remove non-JSON values.
     JSON.parse(
       JSON.stringify(
@@ -193,12 +194,10 @@ test('markdown -> mdast', (t) => {
     },
     'should add a `data.estree` if `addResult` was used in the syntax extension'
   )
-
-  t.end()
 })
 
-test('mdast -> markdown', (t) => {
-  t.deepEqual(
+test('mdxjsEsmToMarkdown', () => {
+  assert.deepEqual(
     toMarkdown(
       {
         type: 'root',
@@ -213,7 +212,7 @@ test('mdast -> markdown', (t) => {
     'should serialize ESM'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toMarkdown(
       {
         type: 'root',
@@ -228,6 +227,4 @@ test('mdast -> markdown', (t) => {
     '\n\nd\n',
     'should not crash on ESM missing `value`'
   )
-
-  t.end()
 })
