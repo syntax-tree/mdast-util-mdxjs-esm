@@ -1,22 +1,26 @@
-import {type Literal} from 'mdast'
-import {type Program} from 'estree-jsx'
+import type {Literal} from 'mdast'
+import type {Program} from 'estree-jsx'
 
-export type MdxjsEsm = {
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export interface MdxjsEsm extends Literal {
   type: 'mdxjsEsm'
-  data?: {estree?: Program} & Literal['data']
-} & Literal
+  data?: {estree?: Program}
+}
 
 declare module 'mdast' {
-  type BlockContentMap = {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface BlockContentMap {
     mdxjsEsm: MdxjsEsm
   }
 }
 
 declare module 'hast' {
-  type RootContentMap = {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface RootContentMap {
     mdxjsEsm: MdxjsEsm
   }
-  type ElementContentMap = {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface ElementContentMap {
     mdxjsEsm: MdxjsEsm
   }
 }
