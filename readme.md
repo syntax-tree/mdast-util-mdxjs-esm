@@ -20,6 +20,7 @@
     *   [`mdxjsEsmFromMarkdown`](#mdxjsesmfrommarkdown)
     *   [`mdxjsEsmToMarkdown`](#mdxjsesmtomarkdown)
     *   [`MdxjsEsm`](#mdxjsesm)
+    *   [`MdxjsEsmHast`](#mdxjsesmhast)
 *   [HTML](#html)
 *   [Syntax](#syntax)
 *   [Syntax tree](#syntax-tree)
@@ -197,8 +198,25 @@ MDX ESM (import/export) node (TypeScript type).
 ###### Type
 
 ```ts
-import type {Literal} from 'mdast'
 import type {Program} from 'estree-jsx'
+import type {Literal} from 'mdast'
+
+interface MdxjsEsm extends Literal {
+  type: 'mdxjsEsm'
+  data?: {estree?: Program | null | undefined}
+}
+```
+
+### `MdxjsEsmHast`
+
+Same as [`MdxjsEsm`][api-mdxjs-esm], but registered with `@types/hast`
+(TypeScript type).
+
+###### Type
+
+```ts
+import type {Program} from 'estree-jsx'
+import type {Literal} from 'hast'
 
 interface MdxjsEsm extends Literal {
   type: 'mdxjsEsm'
@@ -227,7 +245,7 @@ The following interfaces are added to **[mdast][]** by this utility.
 
 ```idl
 interface MdxjsEsm <: Literal {
-  type: "mdxjsEsm"
+  type: 'mdxjsEsm'
 }
 ```
 
@@ -265,9 +283,10 @@ a *[parent][dfn-parent]*, that parent must be **[Root][dfn-root]**.
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional type [`MdxjsEsm`][api-mdxjs-esm].
+It exports the additional types [`MdxjsEsm`][api-mdxjs-esm] and
+[`MdxjsEsmHast`][api-mdxjs-esm-hast].
 
-It also registers the node type with `@types/mdast`.
+It also registers the node type with `@types/mdast` and `@types/hast`.
 If you’re working with the syntax tree, make sure to import this utility
 somewhere in your types, as that registers the new node types in the tree.
 
@@ -389,14 +408,16 @@ abide by its terms.
 
 [dfn-root]: https://github.com/syntax-tree/mdast#root
 
-[dfn-flow-content]: #flowcontent-mdxjs-esm
-
 [remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [mdx]: https://mdxjs.com
+
+[dfn-flow-content]: #flowcontent-mdxjs-esm
 
 [api-mdxjs-esm-from-markdown]: #mdxjsesmfrommarkdown
 
 [api-mdxjs-esm-to-markdown]: #mdxjsesmtomarkdown
 
 [api-mdxjs-esm]: #mdxjsesm
+
+[api-mdxjs-esm-hast]: #mdxjsesmhast
