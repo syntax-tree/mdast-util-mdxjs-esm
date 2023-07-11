@@ -3,13 +3,13 @@ import test from 'node:test'
 import * as acorn from 'acorn'
 import {mdxjsEsm} from 'micromark-extension-mdxjs-esm'
 import {fromMarkdown} from 'mdast-util-from-markdown'
+import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'mdast-util-mdxjs-esm'
 import {toMarkdown} from 'mdast-util-to-markdown'
 import {removePosition} from 'unist-util-remove-position'
-import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from './index.js'
 
 test('core', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('./index.js')).sort(), [
+    assert.deepEqual(Object.keys(await import('mdast-util-mdxjs-esm')).sort(), [
       'mdxjsEsmFromMarkdown',
       'mdxjsEsmToMarkdown'
     ])
