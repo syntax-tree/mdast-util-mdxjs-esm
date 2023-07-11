@@ -69,14 +69,14 @@ npm install mdast-util-mdxjs-esm
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'https://esm.sh/mdast-util-mdxjs-esm@1'
+import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'https://esm.sh/mdast-util-mdxjs-esm@2'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'https://esm.sh/mdast-util-mdxjs-esm@1?bundle'
+  import {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from 'https://esm.sh/mdast-util-mdxjs-esm@2?bundle'
 </script>
 ```
 
