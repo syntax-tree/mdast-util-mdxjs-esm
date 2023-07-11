@@ -25,11 +25,6 @@ export interface MdxjsEsm extends MdastLiteral {
 }
 
 /**
- * Deprecated: use the `MdxjsEsm` type instead.
- */
-export type MDXJSEsm = MdxjsEsm
-
-/**
  * MDX ESM (import/export) node (for hast).
  */
 export interface MdxjsEsmHast extends HastLiteral {
