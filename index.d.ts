@@ -57,6 +57,14 @@ export interface MdxjsEsmHast extends HastLiteral {
 // Add nodes to mdast content.
 declare module 'mdast' {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface RootContentMap {
+    /**
+     * MDX ESM.
+     */
+    mdxjsEsm: MdxjsEsm
+  }
+
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface FrontmatterContentMap {
     /**
      * MDX ESM.

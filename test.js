@@ -59,19 +59,18 @@ test('mdxjsEsmFromMarkdown', () => {
     'should support ESM'
   )
 
+  let tree = fromMarkdown('import a from "b"\nexport var c = ""\n\nd', {
+    extensions: [mdxjsEsm({acorn, addResult: true})],
+    mdastExtensions: [mdxjsEsmFromMarkdown]
+  })
+
+  removePosition(tree, {force: true})
+
+  // Cheap clone to remove non-JSON values.
+  tree = JSON.parse(JSON.stringify(tree))
+
   assert.deepEqual(
-    // Cheap clone to remove non-JSON values.
-    JSON.parse(
-      JSON.stringify(
-        removePosition(
-          fromMarkdown('import a from "b"\nexport var c = ""\n\nd', {
-            extensions: [mdxjsEsm({acorn, addResult: true})],
-            mdastExtensions: [mdxjsEsmFromMarkdown]
-          }),
-          true
-        )
-      )
-    ),
+    tree,
     {
       type: 'root',
       children: [
