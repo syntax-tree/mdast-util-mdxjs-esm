@@ -17,8 +17,8 @@
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`mdxjsEsmFromMarkdown`](#mdxjsesmfrommarkdown)
-    *   [`mdxjsEsmToMarkdown`](#mdxjsesmtomarkdown)
+    *   [`mdxjsEsmFromMarkdown()`](#mdxjsesmfrommarkdown)
+    *   [`mdxjsEsmToMarkdown()`](#mdxjsesmtomarkdown)
     *   [`MdxjsEsm`](#mdxjsesm)
     *   [`MdxjsEsmHast`](#mdxjsesmhast)
 *   [HTML](#html)
@@ -105,12 +105,12 @@ const doc = await fs.readFile('example.mdx')
 
 const tree = fromMarkdown(doc, {
   extensions: [mdxjsEsm({acorn, addResult: true})],
-  mdastExtensions: [mdxjsEsmFromMarkdown]
+  mdastExtensions: [mdxjsEsmFromMarkdown()]
 })
 
 console.log(tree)
 
-const out = toMarkdown(tree, {extensions: [mdxjsEsmToMarkdown]})
+const out = toMarkdown(tree, {extensions: [mdxjsEsmToMarkdown()]})
 
 console.log(out)
 ```
@@ -178,18 +178,28 @@ This package exports the identifiers
 [`mdxjsEsmToMarkdown`][api-mdxjs-esm-to-markdown].
 There is no default export.
 
-### `mdxjsEsmFromMarkdown`
+### `mdxjsEsmFromMarkdown()`
 
-Extension for [`mdast-util-from-markdown`][mdast-util-from-markdown] to enable
-MDX ESM.
+Create an extension for [`mdast-util-from-markdown`][mdast-util-from-markdown]
+to enable MDX.js ESM in markdown.
 
 When using the [micromark syntax extension][extension] with `addResult`, nodes
 will have a `data.estree` field set to an ESTree [`Program`][program] node.
 
-### `mdxjsEsmToMarkdown`
+###### Returns
 
-Extension for [`mdast-util-to-markdown`][mdast-util-to-markdown] to enable MDX
-ESM.
+Extension for `mdast-util-from-markdown` to enable MDX.js ESM
+([`FromMarkdownExtension`][from-markdown-extension]).
+
+### `mdxjsEsmToMarkdown()`
+
+Create an extension for [`mdast-util-to-markdown`][mdast-util-to-markdown]
+to enable MDX.js ESM in markdown.
+
+###### Returns
+
+Extension for `mdast-util-to-markdown` to enable MDX.js ESM
+([`ToMarkdownExtension`][to-markdown-extension]).
 
 ### `MdxjsEsm`
 
@@ -411,6 +421,10 @@ abide by its terms.
 [remark-mdx]: https://mdxjs.com/packages/remark-mdx/
 
 [mdx]: https://mdxjs.com
+
+[from-markdown-extension]: https://github.com/syntax-tree/mdast-util-from-markdown#extension
+
+[to-markdown-extension]: https://github.com/syntax-tree/mdast-util-to-markdown#options
 
 [dfn-flow-content]: #flowcontent-mdxjs-esm
 

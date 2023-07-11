@@ -16,12 +16,12 @@ test('core', async function (t) {
   })
 })
 
-test('mdxjsEsmFromMarkdown', async function (t) {
+test('mdxjsEsmFromMarkdown()', async function (t) {
   await t.test('should support ESM', async function () {
     assert.deepEqual(
       fromMarkdown('import a from "b"\nexport var c = ""\n\nd', {
         extensions: [mdxjsEsm({acorn})],
-        mdastExtensions: [mdxjsEsmFromMarkdown]
+        mdastExtensions: [mdxjsEsmFromMarkdown()]
       }),
       {
         type: 'root',
@@ -65,7 +65,7 @@ test('mdxjsEsmFromMarkdown', async function (t) {
     async function () {
       let tree = fromMarkdown('import a from "b"\nexport var c = ""\n\nd', {
         extensions: [mdxjsEsm({acorn, addResult: true})],
-        mdastExtensions: [mdxjsEsmFromMarkdown]
+        mdastExtensions: [mdxjsEsmFromMarkdown()]
       })
 
       removePosition(tree, {force: true})
@@ -206,7 +206,7 @@ test('mdxjsEsmFromMarkdown', async function (t) {
   )
 })
 
-test('mdxjsEsmToMarkdown', async function (t) {
+test('mdxjsEsmToMarkdown()', async function (t) {
   await t.test('should serialize ESM', async function () {
     assert.deepEqual(
       toMarkdown(
@@ -217,7 +217,7 @@ test('mdxjsEsmToMarkdown', async function (t) {
             {type: 'paragraph', children: [{type: 'text', value: 'd'}]}
           ]
         },
-        {extensions: [mdxjsEsmToMarkdown]}
+        {extensions: [mdxjsEsmToMarkdown()]}
       ),
       'import a from "b"\nexport var c = ""\n\nd\n'
     )
@@ -234,7 +234,7 @@ test('mdxjsEsmToMarkdown', async function (t) {
             {type: 'paragraph', children: [{type: 'text', value: 'd'}]}
           ]
         },
-        {extensions: [mdxjsEsmToMarkdown]}
+        {extensions: [mdxjsEsmToMarkdown()]}
       ),
       '\n\nd\n'
     )
