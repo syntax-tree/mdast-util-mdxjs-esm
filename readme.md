@@ -60,7 +60,7 @@ internals away.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+ and 16.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install mdast-util-mdxjs-esm
@@ -209,11 +209,15 @@ MDX ESM (import/export) node (TypeScript type).
 
 ```ts
 import type {Program} from 'estree-jsx'
-import type {Literal} from 'mdast'
+import type {Data, Literal} from 'mdast'
 
 interface MdxjsEsm extends Literal {
   type: 'mdxjsEsm'
-  data?: {estree?: Program | null | undefined}
+  data?: MdxjsEsmData | undefined
+}
+
+export interface MdxjsEsmData extends Data {
+  estree?: Program | null | undefined
 }
 ```
 
@@ -226,11 +230,15 @@ Same as [`MdxjsEsm`][api-mdxjs-esm], but registered with `@types/hast`
 
 ```ts
 import type {Program} from 'estree-jsx'
-import type {Literal} from 'hast'
+import type {Data, Literal} from 'hast'
 
-interface MdxjsEsm extends Literal {
+interface MdxjsEsmHast extends Literal {
   type: 'mdxjsEsm'
-  data?: {estree?: Program | null | undefined}
+  data?: MdxjsEsmHastData | undefined
+}
+
+export interface MdxjsEsmHastData extends Data {
+  estree?: Program | null | undefined
 }
 ```
 
@@ -317,12 +325,15 @@ visit(tree, function (node) {
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 14.14+ and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
 
-This plugin works with `mdast-util-from-markdown` version 1+ and
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `mdast-util-mdxjs-esm@^1`,
+compatible with Node.js 12.
+
+This utility works with `mdast-util-from-markdown` version 1+ and
 `mdast-util-to-markdown` version 1+.
 
 ## Related
@@ -362,9 +373,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/mdast-util-mdxjs-esm
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/mdast-util-mdxjs-esm.svg
+[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=mdast-util-mdxjs-esm
 
-[size]: https://bundlephobia.com/result?p=mdast-util-mdxjs-esm
+[size]: https://bundlejs.com/?q=mdast-util-mdxjs-esm
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
