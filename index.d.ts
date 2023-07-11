@@ -1,6 +1,6 @@
 import type {Program} from 'estree-jsx'
-import type {Literal as HastLiteral} from 'hast'
-import type {Literal as MdastLiteral} from 'mdast'
+import type {Data as HastData, Literal as HastLiteral} from 'hast'
+import type {Data as MdastData, Literal as MdastLiteral} from 'mdast'
 
 export {mdxjsEsmFromMarkdown, mdxjsEsmToMarkdown} from './lib/index.js'
 
@@ -14,14 +14,19 @@ export interface MdxjsEsm extends MdastLiteral {
   type: 'mdxjsEsm'
 
   /**
-   * Data.
+   * Data associated with mdast MDX.js ESM.
    */
-  data?: {
-    /**
-     * Program node from estree.
-     */
-    estree?: Program | null | undefined
-  }
+  data?: MdxjsEsmData | undefined
+}
+
+/**
+ * Info associated with mdast MDX.js ESM nodes by the ecosystem.
+ */
+export interface MdxjsEsmData extends MdastData {
+  /**
+   * Program node from estree.
+   */
+  estree?: Program | null | undefined
 }
 
 /**
@@ -34,14 +39,19 @@ export interface MdxjsEsmHast extends HastLiteral {
   type: 'mdxjsEsm'
 
   /**
-   * Data.
+   * Data associated with hast MDX.js ESM.
    */
-  data?: {
-    /**
-     * Program node from estree.
-     */
-    estree?: Program | null | undefined
-  }
+  data?: MdxjsEsmHastData | undefined
+}
+
+/**
+ * Info associated with hast MDX.js ESM nodes by the ecosystem.
+ */
+export interface MdxjsEsmHastData extends MdastData {
+  /**
+   * Program node from estree.
+   */
+  estree?: Program | null | undefined
 }
 
 // Add nodes to mdast content.
