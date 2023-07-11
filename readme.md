@@ -300,7 +300,7 @@ import {visit} from 'unist-util-visit'
 /** @type {import('mdast').Root} */
 const tree = getMdastNodeSomeHow()
 
-visit(tree, (node) => {
+visit(tree, function (node) {
   // `node` can now be an ESM node.
 })
 ```
