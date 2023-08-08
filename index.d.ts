@@ -47,7 +47,7 @@ export interface MdxjsEsmHast extends HastLiteral {
 /**
  * Info associated with hast MDX.js ESM nodes by the ecosystem.
  */
-export interface MdxjsEsmHastData extends MdastData {
+export interface MdxjsEsmHastData extends HastData {
   /**
    * Program node from estree.
    */
