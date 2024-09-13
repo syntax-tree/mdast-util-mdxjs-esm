@@ -70,7 +70,7 @@ test('mdxjsEsmFromMarkdown()', async function (t) {
 
       removePosition(tree, {force: true})
 
-      // Cheap clone to remove non-JSON values.
+      // eslint-disable-next-line unicorn/prefer-structured-clone -- cheap clone to remove non-JSON values.
       tree = JSON.parse(JSON.stringify(tree))
 
       assert.deepEqual(tree, {
